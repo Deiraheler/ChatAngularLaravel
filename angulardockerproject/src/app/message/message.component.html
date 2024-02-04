@@ -1,0 +1,10 @@
+<div class="row mx-0" [ngClass]="{'justify-content-end': userID === message.user}">
+  <div class="message col-7 mb-2" [ngClass]="{'align-items-end d-flex flex-column': userID === message.user}">
+
+    <span>{{ message.text }}</span>
+    <div class="message-details">
+      <span>{{ message.time | date:'shortTime':'GMT' }}</span>
+      <div *ngIf="userID === message.user" class="rounded-5 message-status" [ngClass]="{'bg-secondary': !message.seen, 'bg-primary': message.seen}"></div>
+    </div>
+  </div>
+</div>

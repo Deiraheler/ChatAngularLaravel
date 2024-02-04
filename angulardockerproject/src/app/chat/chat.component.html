@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="chat-header bg-secondary text-white p-3 mb-3">
+    <span>{{ chatTitle }}</span>
+  </div>
+  <div class="chat-content">
+    <app-message *ngFor="let message of messages" [message]="message" [userID]="userID"></app-message>
+  </div>
+  <app-input-field></app-input-field>
+</div>
