@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: my-laravel-app
+        container_name: ChatLaravelAngular
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - app-network
+
+    angular-service:
+        container_name: angularcontainer
+        build: ./angulardockerproject
+        volumes:
+            - './angulardockerproject:/usr/src/app'
+        ports:
+            - '4200:4200'
+        command: ng serve --host 0.0.0.0 --port 4200
+
+    webserver:
+        image: nginx:alpine
+        container_name: webserver_node
+        restart: unless-stopped
+        ports:
+            - "8800:80"
+        volumes:
+            - ./:/var/www
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
