@@ -4,7 +4,7 @@
     <span>{{ message.text }}</span>
     <div class="message-details">
       <span>{{ message.time | date:'shortTime':'GMT' }}</span>
-      <div *ngIf="userID === message.user" class="rounded-5 message-status" [ngClass]="{'bg-secondary': !message.seen, 'bg-primary': message.seen}"></div>
+      <div *ngIf="userID === message.user" class="rounded-5 message-status" [ngClass]="{'bg-secondary': message.seen == undefined, 'bg-primary': !message.seen, 'bg-success': message.seen}"></div>
     </div>
   </div>
 </div>

@@ -14,3 +14,65 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/angulardockerproject/.DS_STORE
+
+/angulardockerproject/dist/
+/angulardockerproject/bazel-out
+/angulardockerproject/integration/bazel/bazel-*
+/angulardockerproject/*.log
+/angulardockerproject/node_modules/
+
+# CircleCI temporary file for cache key computation.
+# See `save_month_to_file` in `.circleci/config.yml`.
+/angulardockerproject/month.txt
+
+# Include when developing application packages.
+/angulardockerproject/pubspec.lock
+/angulardockerproject/.c9
+/angulardockerproject/.idea/
+/angulardockerproject/.devcontainer/*
+!/angulardockerproject/.devcontainer/README.md
+!/angulardockerproject/.devcontainer/recommended-devcontainer.json
+!/angulardockerproject/.devcontainer/recommended-Dockerfile
+/angulardockerproject/.settings/
+/angulardockerproject/.vscode/launch.json
+/angulardockerproject/.vscode/settings.json
+/angulardockerproject/.vscode/tasks.json
+/angulardockerproject/*.swo
+/angulardockerproject/*.swp
+/angulardockerproject/modules/.settings
+/angulardockerproject/modules/.vscode
+/angulardockerproject/.vimrc
+/angulardockerproject/.nvimrc
+
+# Don't check in secret files
+/angulardockerproject/*secret.js
+
+# Ignore npm/yarn debug log
+/angulardockerproject/npm-debug.log
+/angulardockerproject/yarn-error.log
+
+# build-analytics
+/angulardockerproject/.build-analytics
+
+# rollup-test output
+/angulardockerproject/modules/rollup-test/dist/
+
+# User specific bazel settings
+/angulardockerproject/.bazelrc.user
+
+# User specific ng-dev settings
+/angulardockerproject/.ng-dev.user*
+
+/angulardockerproject/.notes.md
+/angulardockerproject/baseline.json
+
+# Ignore .history for the xyz.local-history VSCode extension
+/angulardockerproject/.history
+
+# Husky
+/angulardockerproject/.husky/_
+/angulardockerproject/aio/content/examples/.DS_STORE
+
+# Ignore cache created with the Angular CLI.
+/angulardockerproject/.angular/

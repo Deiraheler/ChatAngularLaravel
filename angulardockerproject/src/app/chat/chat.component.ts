@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {message} from "../shared/message";
 import {MessageComponent} from "../message/message.component";
 import {CommonModule} from "@angular/common";
 import {InputFieldComponent} from "../input-field/input-field.component";
+import {Subscription} from "rxjs";
+import {CommunicationService} from "../shared/communication.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-chat',
@@ -11,28 +14,33 @@ import {InputFieldComponent} from "../input-field/input-field.component";
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.sass'
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit{
   chatTitle: string = "Main chat";
   userID: number = 1;
-  messages: message[] = [
-    new message("Hello", new Date().getTime(), 1, true),
-    new message("How are you?", new Date().getTime(), 1, true),
-    new message("Hello My Friend", new Date().getTime(), 2, false),
-    new message("I am great", new Date().getTime(), 2, false),
-    new message("Good to hear ;)", new Date().getTime(), 1, true),
-    new message("Hello", new Date().getTime(), 1, true),
-    new message("How are you?", new Date().getTime(), 1, true),
-    new message("Hello My Friend", new Date().getTime(), 2, false),
-    new message("I am great", new Date().getTime(), 2, false),
-    new message("Good to hear ;)", new Date().getTime(), 1, true),
-    new message("Hello", new Date().getTime(), 1, true),
-    new message("How are you?", new Date().getTime(), 1, true),
-    new message("Hello My Friend", new Date().getTime(), 2, false),
-    new message("I am great", new Date().getTime(), 2, false),
-    new message("Good to hear ;)", new Date().getTime(), 1, true),
-  ];
+  messages: message[] = [];
 
-  addNewMessage(){
+  private subscription: Subscription;
 
+  constructor(private communicationService: CommunicationService, private apiService: ApiService) {
+    this.subscription = this.communicationService.message$.subscribe(message => {
+      this.addNewMessage(message);
+    });
+  }
+
+  ngOnInit() {
+    this.apiService.getMessages().subscribe(messages => {
+      console.log(messages);
+      for(let messageObj of messages){
+        this.messages.push(new message(messageObj.id, messageObj.content, messageObj.created_at, messageObj.user_id, messageObj.seen));
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  addNewMessage(messageText: string) {
+    this.messages.push(new message(8, messageText, new Date().getTime(), this.userID, false));
   }
 }
