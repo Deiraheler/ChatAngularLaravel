@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import Pusher from 'pusher-js';
+import Echo from 'laravel-echo';
+
+declare global {
+  interface Window {
+    Echo: any;
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -13,20 +19,17 @@ import Pusher from 'pusher-js';
 export class AppComponent implements OnInit {
   title = 'angulardockerproject';
 
-  ngOnInit() {
-    // Initialize Pusher client-side
-    const pusher = new Pusher('57d36daaf122cc877bce', {
-      cluster: 'eu',
-      // useTLS is recommended for secure connections
-      useTLS: true
-    });
-
-    // Subscribe to a channel
-    const channel = pusher.subscribe('chat');
-
-    // Bind to an event on that channel
-    channel.bind('MessageSent', (data: any) => {
-      console.log(data);
-    });
+  ngOnInit(): void {
+    if (typeof window !== 'undefined') {
+      window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: 'local',
+        wsHost: window.location.hostname,
+        wsPort: 6001,
+        disableStats: true,
+        encrypted: false,
+        enabledTransports: ['ws', 'wss'],
+      });
+    }
   }
 }

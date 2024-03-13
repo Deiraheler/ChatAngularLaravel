@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {message} from "../shared/message";
 import {MessageComponent} from "../message/message.component";
 import {CommonModule} from "@angular/common";
@@ -17,6 +17,7 @@ import {ApiService} from "../services/api.service";
 export class ChatComponent implements OnInit{
   chatTitle: string = "Main chat";
   userID: number = 1;
+  data: any;
   messages: message[] = [];
 
   private subscription: Subscription;

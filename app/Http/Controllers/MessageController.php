@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSent;
+use App\Events\NewMessage;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager;
 
 class MessageController extends Controller
 {
@@ -19,11 +20,17 @@ class MessageController extends Controller
     //post
     public function store(Request $request)
     {
-        $message = Message::create($request->all());
 
-        event(new MessageSent($message));
+        $validatedData = $request->validate([
+            'content' => 'required|string', // Add validation as necessary
+        ]);
 
-        return response()->json($message);
+        $message = new Message;
+        $message->content = $validatedData['content'];
+        $message->user_id = 3; // Add user_id as necessary
+        $message->save();
+
+        return response()->json($message, 201);
     }
 
     //delete

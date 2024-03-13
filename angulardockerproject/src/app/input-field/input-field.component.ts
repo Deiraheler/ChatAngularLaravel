@@ -17,8 +17,10 @@ export class InputFieldComponent {
   constructor(private communicationService: CommunicationService) {}
 
   addNewMessage() {
-    console.log(this.inputMessage);
-    this.communicationService.sendMessage(this.inputMessage);
-    this.inputMessage = "";
+    if (this.inputMessage.trim() !== '') {
+      this.communicationService.sendMessage(this.inputMessage);
+      this.inputMessage = "";
+    }
   }
 }
+
